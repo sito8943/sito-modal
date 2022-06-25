@@ -1,2 +1,2 @@
 # sito-modal
-Super flexible modal  for react
+Super flexible modal for react
