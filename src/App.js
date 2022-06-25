@@ -10,8 +10,7 @@ const SitoModal = forwardRef((props, ref) => {
   const {
     visible,
     onClose,
-    animation,
-    backdropTransition,
+    transition,
     backdropBackground,
     backdropFilter,
     background,
@@ -54,7 +53,8 @@ const SitoModal = forwardRef((props, ref) => {
         justifyContent: "center",
         background: backdropBackground,
         backdropFilter: backdropFilter,
-        transition: backdropTransition,
+        zIndex: visible ? 99 : -1,
+        transition,
       }}
       extraProps={{
         onClick: onClose,
@@ -65,7 +65,13 @@ const SitoModal = forwardRef((props, ref) => {
         style={style}
         id={id}
         name={name}
-        sx={modalSx}
+        sx={{
+          // opacity: visible ? 1 : 0,
+          transition,
+          transform: visible ? "scale(1)" : "scale(0)",
+          opacity: visible ? 1 : 0,
+          ...modalSx,
+        }}
         className={className}
         {...extraProps}
       >
@@ -76,8 +82,7 @@ const SitoModal = forwardRef((props, ref) => {
 });
 
 SitoModal.defaultProps = {
-  animation: "scale",
-  backdropTransition: "all 500ms ease",
+  transition: "all 500ms ease",
   backdropBackground: "#222222ec",
   backdropFilter: "blur(4px)",
   background: "#222333",
@@ -97,7 +102,7 @@ SitoModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node,
   animation: PropTypes.oneOf(["scale", "opacity"]),
-  backdropTransition: PropTypes.string,
+  transition: PropTypes.string,
   backdropBackground: PropTypes.string,
   backdropFilter: PropTypes.string,
   background: PropTypes.string,
