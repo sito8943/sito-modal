@@ -1,8 +1,5 @@
 import { forwardRef } from "react";
 
-// @emotion
-import { css } from "@emotion/css";
-
 // sito components
 import SitoContainer from "sito-container";
 
@@ -11,6 +8,10 @@ import PropTypes from "prop-types";
 
 const SitoModal = forwardRef((props, ref) => {
   const {
+    visible,
+    onClose,
+    animation,
+    backdropTransition,
     backdropBackground,
     backdropFilter,
     background,
@@ -27,7 +28,7 @@ const SitoModal = forwardRef((props, ref) => {
     style,
   } = props;
 
-  const modalSx = css({
+  const modalSx = {
     flexDirection,
     display,
     alignItems,
@@ -38,7 +39,7 @@ const SitoModal = forwardRef((props, ref) => {
     width: "250px",
     height: "250px",
     ...sx,
-  });
+  };
 
   return (
     <SitoContainer
@@ -53,6 +54,10 @@ const SitoModal = forwardRef((props, ref) => {
         justifyContent: "center",
         background: backdropBackground,
         backdropFilter: backdropFilter,
+        transition: backdropTransition,
+      }}
+      extraProps={{
+        onClick: onClose,
       }}
     >
       <SitoContainer
@@ -60,7 +65,8 @@ const SitoModal = forwardRef((props, ref) => {
         style={style}
         id={id}
         name={name}
-        className={`${className} ${modalSx}`}
+        sx={modalSx}
+        className={className}
         {...extraProps}
       >
         {children}
@@ -70,6 +76,8 @@ const SitoModal = forwardRef((props, ref) => {
 });
 
 SitoModal.defaultProps = {
+  animation: "scale",
+  backdropTransition: "all 500ms ease",
   backdropBackground: "#222222ec",
   backdropFilter: "blur(4px)",
   background: "#222333",
@@ -85,7 +93,11 @@ SitoModal.defaultProps = {
 };
 
 SitoModal.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
   children: PropTypes.node,
+  animation: PropTypes.oneOf(["scale", "opacity"]),
+  backdropTransition: PropTypes.string,
   backdropBackground: PropTypes.string,
   backdropFilter: PropTypes.string,
   background: PropTypes.string,
