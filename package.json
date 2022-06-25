@@ -10,7 +10,8 @@
     "@emotion/styled": "^11.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "sito-container": "^0.2.14"
   },
   "license": "MIT",
   "author": "SitoNimbus",
